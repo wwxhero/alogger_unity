@@ -7,7 +7,7 @@
 #include <string>
 //#include <stringapiset.h>
 #include <windows.h>
-#include "Logger.h"
+#include "libLogger.h"
 using namespace std;
 int main()
 {

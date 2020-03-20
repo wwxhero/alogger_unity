@@ -1,5 +1,5 @@
-#include "pch.h"
-#include "Logger.h"
+#include "stdafx.h"
+#include "libLogger.h"
 #define TEST_CONSISTENCY_INPUT
 #define OPTIMISED_DISK_IO
 //#define TEST_CONSISTENCY_OUTPUT

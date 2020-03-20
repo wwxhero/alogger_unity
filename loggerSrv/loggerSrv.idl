@@ -1,0 +1,36 @@
+// loggerSrv.idl : IDL source for loggerSrv
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (loggerSrv.tlb) and marshalling code.
+
+import "oaidl.idl";
+import "ocidl.idl";
+
+[
+	object,
+	uuid(c404679a-8f9d-411e-8e3a-8caf4410ddc3),
+	dual,
+	nonextensible,
+	pointer_default(unique)
+]
+interface ILogger : IDispatch
+{
+};
+[
+	uuid(360ce664-a160-41c6-86f8-d76bdcbb479d),
+	version(1.0),
+]
+library loggerSrvLib
+{
+	importlib("stdole2.tlb");
+	[
+		uuid(889c6d9a-2445-451c-9eaf-5b4fe32d6d81)
+	]
+	coclass Logger
+	{
+		[default] interface ILogger;
+	};
+};
+
+import "shobjidl.idl";
