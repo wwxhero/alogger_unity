@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "loggerTester", "logger_tester\loggerTester.vcxproj", "{9EFCCDBE-52FB-42EA-A499-81CAF03FF77A}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "loggerSrv", "loggerSrv\loggerSrv.vcxproj", "{5F2DDB8E-9ABB-44F4-8F8A-2E882C16FDA0}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A4A32CA1-9860-4DA3-848A-AAAFCCD42405} = {A4A32CA1-9860-4DA3-848A-AAAFCCD42405}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "loggerSrvPS", "loggerSrvPS\loggerSrvPS.vcxproj", "{D6C31AB9-2BD2-4B30-92BD-93701D7377AE}"
 	ProjectSection(ProjectDependencies) = postProject
