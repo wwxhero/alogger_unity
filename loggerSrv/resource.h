@@ -4,7 +4,7 @@
 //
 #define IDS_PROJNAME                    100
 #define IDR_LOGGERSRV                   101
-#define IDR_LOGGER                      106
+#define IDR_LOGGERCOM                   106
 
 // Next default values for new objects
 // 

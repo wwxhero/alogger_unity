@@ -1,4 +1,4 @@
-// Logger.h : Declaration of the CLogger
+// Logger.h : Declaration of the CLoggerCOM
 
 #pragma once
 #include "resource.h"       // main symbols
@@ -7,6 +7,7 @@
 
 #include "loggerSrv_i.h"
 
+#include "libLogger.h"
 
 
 #if defined(_WIN32_WCE) && !defined(_CE_DCOM) && !defined(_CE_ALLOW_SINGLE_THREADED_OBJECTS_IN_MTA)
@@ -16,22 +17,22 @@
 using namespace ATL;
 
 
-// CLogger
+// CLoggerCOM
 
-class ATL_NO_VTABLE CLogger :
+class ATL_NO_VTABLE CLoggerCOM :
 	public CComObjectRootEx<CComSingleThreadModel>,
-	public CComCoClass<CLogger, &CLSID_Logger>,
+	public CComCoClass<CLoggerCOM, &CLSID_Logger>,
 	public IDispatchImpl<ILogger, &IID_ILogger, &LIBID_loggerSrvLib, /*wMajor =*/ 1, /*wMinor =*/ 0>
 {
 public:
-	CLogger()
+	CLoggerCOM() : m_pLogger(NULL)
 	{
 	}
 
-DECLARE_REGISTRY_RESOURCEID(106)
+DECLARE_REGISTRY_RESOURCEID(IDR_LOGGERCOM)
 
 
-BEGIN_COM_MAP(CLogger)
+BEGIN_COM_MAP(CLoggerCOM)
 	COM_INTERFACE_ENTRY(ILogger)
 	COM_INTERFACE_ENTRY(IDispatch)
 END_COM_MAP()
@@ -50,9 +51,15 @@ END_COM_MAP()
 	}
 
 public:
-
-
-
+	STDMETHOD(Create)(BSTR path);
+	STDMETHOD(Close)();
+	STDMETHOD(LogOut)(BSTR logItem);
+	STDMETHOD(Dump)();
+private:
+	CLogger* m_pLogger;
+#ifdef _DEBUG
+	CString m_strPath;
+#endif
 };
 
-OBJECT_ENTRY_AUTO(__uuidof(Logger), CLogger)
+OBJECT_ENTRY_AUTO(__uuidof(Logger), CLoggerCOM)

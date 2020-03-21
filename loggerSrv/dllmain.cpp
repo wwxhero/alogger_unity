@@ -5,6 +5,8 @@
 #include "loggerSrv_i.h"
 #include "dllmain.h"
 
+const TCHAR CloggerSrvModule::c_logSrc[] = _T("LoggerSrv");
+
 CloggerSrvModule _AtlModule;
 
 // DLL Entry Point

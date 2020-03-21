@@ -16,6 +16,10 @@ import "ocidl.idl";
 ]
 interface ILogger : IDispatch
 {
+	[id(1)] HRESULT Create([in] BSTR pathScene);
+	[id(2)] HRESULT Close();
+	[id(3)] HRESULT LogOut([in] BSTR logItem);
+	[id(4)] HRESULT Dump();
 };
 [
 	uuid(360ce664-a160-41c6-86f8-d76bdcbb479d),
