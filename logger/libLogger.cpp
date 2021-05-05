@@ -5,11 +5,11 @@
 //#define TEST_CONSISTENCY_OUTPUT
 std::map<OVERLAPPED*, CLogger*> CLogger::m_overlap2logger;
 
-CLogger::CLogger(const wchar_t* szPath) 
+CLogger::CLogger(const wchar_t* szPath)
 #ifdef TEST_OVERFLOW
 		: c_nBuckets(1)
 #else
-		: c_nBuckets(4)
+		: c_nBuckets(128)
 #endif
 {
 #ifdef TEST_OVERFLOW
@@ -68,7 +68,7 @@ void CLogger::Dump()
 	::WaitForSingleObjectEx(m_aycOver.hEvent, INFINITE, TRUE); //wait till the asyc io is done
 }
 
-void CLogger::Logout(const wchar_t* logItem, unsigned int cap)	
+void CLogger::Logout(const wchar_t* logItem, unsigned int cap)
 {
 	unsigned int delta = (cap << 1);
 	bool overflow = (QueueMem::overflow == m_queue.push_front((const char*)logItem, delta));
