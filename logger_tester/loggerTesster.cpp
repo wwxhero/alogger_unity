@@ -43,14 +43,14 @@ int main()
 				getline(ifs, strLine);
 				strLine += "\r\n";
 				const char* cLine = strLine.c_str();
-				unsigned int nc = strLine.length();
+				unsigned int nc = (unsigned int)strLine.length();
 				int capReq = MultiByteToWideChar(CP_ACP
 					, MB_PRECOMPOSED
 					, cLine
 					, nc
 					, NULL
 					, 0);
-				if (capLogItem < capReq)
+				if ((int)capLogItem < capReq)
 				{
 					capLogItem = capReq;
 					logItem = (wchar_t *)realloc(logItem, capLogItem * sizeof(wchar_t));
