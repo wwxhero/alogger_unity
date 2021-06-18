@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using UnityEngine;
-public class loggerTester : MonoBehaviour {
+public class loggerTesterCorrectness : MonoBehaviour {
 	loggerSrvLib.Logger m_logger;
 	Random m_rnd = new Random();
 	List<string> m_lstStandard = new List<string>();
@@ -23,10 +23,10 @@ public class loggerTester : MonoBehaviour {
 		m_lstStandard.Add(item);
 	}
 
-	void OnDestroy()  {
-		m_logger.Close();
-		m_logger = null;
-		FileStream fs = new FileStream("test_standard.txt"
+    void OnDestroy()  {
+    	m_logger.Close();
+    	m_logger = null;
+    	FileStream fs = new FileStream("test_standard.txt"
 										   , FileMode.CreateNew
 										   , FileAccess.Write);
 		BufferedStream buf = new BufferedStream(fs);
@@ -36,5 +36,5 @@ public class loggerTester : MonoBehaviour {
 			buf.Write(bytes, 0, bytes.Length);
 		}
 		buf.Flush();
-	}
+    }
 }
