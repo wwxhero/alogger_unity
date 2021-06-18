@@ -3,13 +3,11 @@
 #define TEST_CONSISTENCY_INPUT
 #define OPTIMISED_DISK_IO
 //#define TEST_CONSISTENCY_OUTPUT
-std::map<OVERLAPPED*, CLogger*> CLogger::m_overlap2logger;
-
 CLogger::CLogger(const wchar_t* szPath)
 #ifdef TEST_OVERFLOW
 		: c_nBuckets(1)
 #else
-		: c_nBuckets(128)
+		: c_nBuckets(1024)
 #endif
 {
 #ifdef TEST_OVERFLOW
@@ -50,6 +48,7 @@ CLogger::CLogger(const wchar_t* szPath)
 		TRUE,    // manual-reset event
 		TRUE,    // initial state = signaled
 		NULL);   // unnamed event object
+	m_aycOver.attach = this;
 }
 
 CLogger::~CLogger()
@@ -108,7 +107,8 @@ void CLogger::DumpLogInSeq()
 
 VOID WINAPI CLogger::CompletedWriteRoutine(DWORD dwErr, DWORD cbWritten, LPOVERLAPPED lpOverLap)
 {
-	CLogger* this_logger = m_overlap2logger[lpOverLap];
+	OVERLAPPED_ex* lpOverLapEx = static_cast<OVERLAPPED_ex*>(lpOverLap);
+	CLogger* this_logger = lpOverLapEx->attach;
 	assert(NULL != this_logger);
 	if (this_logger->m_queue.size() > this_logger->m_threashold)
 		this_logger->DumpLogInSeq();
@@ -120,14 +120,11 @@ CLogger* CLogger::CreateLogger(const wchar_t* path)
 {
 	//to create a file for the path and be prepared to write log (asynchronously) to that file
 	CLogger* ret = new CLogger(path);
-	m_overlap2logger[&ret->m_aycOver] = ret;
 	return ret;
 }
 
 void CLogger::DeleteLogger(CLogger* logger)
 {
-	OVERLAPPED* overlap = &logger->m_aycOver;
 	delete logger;
-	m_overlap2logger.erase(overlap);
 }
 

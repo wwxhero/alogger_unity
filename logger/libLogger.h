@@ -109,7 +109,12 @@ private:
 	DWORD m_threashold;
 	char* m_pThresholder;
 	HANDLE m_hFile;
-	OVERLAPPED m_aycOver;
-	static std::map<OVERLAPPED*, CLogger*> m_overlap2logger;
+
+	struct OVERLAPPED_ex : OVERLAPPED
+	{
+		CLogger* attach;
+	};
+
+	OVERLAPPED_ex m_aycOver;
 };
 
