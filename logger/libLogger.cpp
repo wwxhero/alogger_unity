@@ -107,11 +107,16 @@ void CLogger::DumpLogInSeq()
 
 VOID WINAPI CLogger::CompletedWriteRoutine(DWORD dwErr, DWORD cbWritten, LPOVERLAPPED lpOverLap)
 {
-	OVERLAPPED_ex* lpOverLapEx = static_cast<OVERLAPPED_ex*>(lpOverLap);
-	CLogger* this_logger = lpOverLapEx->attach;
-	assert(NULL != this_logger);
-	if (this_logger->m_queue.size() > this_logger->m_threashold)
-		this_logger->DumpLogInSeq();
+	if (0 < cbWritten)
+	{
+		OVERLAPPED_ex* lpOverLapEx = static_cast<OVERLAPPED_ex*>(lpOverLap);
+		CLogger* this_logger = lpOverLapEx->attach;
+		assert(NULL != this_logger);
+		if (this_logger->m_queue.size() > this_logger->m_threashold)
+			this_logger->DumpLogInSeq();
+		else
+			SetEvent(lpOverLap->hEvent);
+	}
 	else
 		SetEvent(lpOverLap->hEvent);
 }
